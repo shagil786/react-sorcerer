@@ -1,0 +1,32 @@
+.App {
+  text-align: center;
+  height: 100%;
+  width: 100%;
+  padding: 20px 40px;
+}
+
+.headerContainer {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  position: relative;
+}
+
+.headerContainer button {
+  position: absolute;
+  right: 10px;
+  top: 8px;
+  outline: none;
+  border: 2px solid #000;
+  background-color: #fff;
+  padding: 4px 16px;
+  filter: drop-shadow(4px 4px 2px #000);
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 100ms ease-in-out;
+}
+
+.headerContainer button:hover {
+  transform: translateY(1px);
+  filter: drop-shadow(2px 2px 2px #000);
+}
