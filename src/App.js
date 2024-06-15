@@ -1,10 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { EditorState, Modifier, RichUtils, convertFromRaw, convertToRaw } from "draft-js";
+import {
+  EditorState,
+  Modifier,
+  RichUtils,
+  convertFromRaw,
+  convertToRaw,
+} from "draft-js";
 import { toast } from "react-toastify";
-import 'react-toastify/dist/ReactToastify.css';
+import "react-toastify/dist/ReactToastify.css";
 import styles from "./App.module.css";
 import EditorComp from "./Editor/EditorComp";
-import { INLINE_STYLES } from './utils/utility';
+import { INLINE_STYLES } from "./utils/utility";
 
 const App = () => {
   const { App: AppContainer, headerContainer } = styles;
@@ -20,7 +26,9 @@ const App = () => {
   useEffect(() => {
     const savedContent = localStorage.getItem("content");
     if (savedContent) {
-      setEditorValue(EditorState.createWithContent(convertFromRaw(JSON.parse(savedContent))));
+      setEditorValue(
+        EditorState.createWithContent(convertFromRaw(JSON.parse(savedContent))),
+      );
     }
   }, []);
 
@@ -28,9 +36,9 @@ const App = () => {
     const newState = RichUtils.handleKeyCommand(editorState, command);
     if (newState) {
       setEditorValue(newState);
-      return 'handled';
+      return "handled";
     }
-    return 'not-handled';
+    return "not-handled";
   };
 
   const handleBeforeInput = (chars, editorState) => {
@@ -40,27 +48,33 @@ const App = () => {
     const blockText = currentContent.getBlockForKey(blockKey).getText();
 
     const matchers = [
-      { char: '#', offset: 1, blockType: 'header-one' },
-      { char: '*', offset: 1, blockType: INLINE_STYLES.BOLD },
-      { char: '**', offset: 2, blockType: INLINE_STYLES.RED },
-      { char: '***', offset: 3, blockType: INLINE_STYLES.UNDERLINE },
-      { char: '```', offset: 3, blockType: INLINE_STYLES.CODE }
+      { char: "#", offset: 1, blockType: "header-one" },
+      { char: "*", offset: 1, blockType: INLINE_STYLES.BOLD },
+      { char: "**", offset: 2, blockType: INLINE_STYLES.RED },
+      { char: "***", offset: 3, blockType: INLINE_STYLES.UNDERLINE },
+      { char: "```", offset: 3, blockType: INLINE_STYLES.CODE },
     ];
 
-    const match = matchers.find(m => chars === ' ' && blockText === m.char);
+    const match = matchers.find((m) => chars === " " && blockText === m.char);
     if (match) {
       const newContentState = Modifier.setBlockType(
-        Modifier.removeRange(currentContent, selection.merge({
-          anchorOffset: 0,
-          focusOffset: match.offset
-        }), 'backward'),
+        Modifier.removeRange(
+          currentContent,
+          selection.merge({
+            anchorOffset: 0,
+            focusOffset: match.offset,
+          }),
+          "backward",
+        ),
         selection,
-        match.blockType
+        match.blockType,
       );
-      setEditorValue(EditorState.push(editorState, newContentState, 'change-block-type'));
-      return 'handled';
+      setEditorValue(
+        EditorState.push(editorState, newContentState, "change-block-type"),
+      );
+      return "handled";
     }
-    return 'not-handled';
+    return "not-handled";
   };
 
   const handleReturn = (e, editorState) => {
@@ -70,16 +84,18 @@ const App = () => {
     const newContentState = Modifier.setBlockType(
       Modifier.splitBlock(currentContent, selection),
       editorState.getSelection(),
-      'unstyled'
+      "unstyled",
     );
-    setEditorValue(EditorState.push(editorState, newContentState, 'change-block-type'));
-    return 'handled';
+    setEditorValue(
+      EditorState.push(editorState, newContentState, "change-block-type"),
+    );
+    return "handled";
   };
 
   return (
     <div className={AppContainer}>
       <header className={headerContainer}>
-        <h2>Demo editor by Md Shagil Nizami</h2>
+        <h2>Demo Editor By Md Shagil Nizami</h2>
         <button onClick={handleSave}>Save</button>
       </header>
       <EditorComp
