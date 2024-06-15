@@ -30,3 +30,18 @@
   transform: translateY(1px);
   filter: drop-shadow(2px 2px 2px #000);
 }
+
+.headerContainer h2 {
+  width: 70%;
+}
+
+@media (max-width: 767px) {
+  .headerContainer button {
+    right: 10px;
+    top: 10px;
+  }
+
+  .headerContainer {
+    position: unset;
+  }
+}
